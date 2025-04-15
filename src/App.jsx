@@ -4,6 +4,7 @@ import Index from './pages/index';
 import Signup from './pages/signup';
 import Login from './pages/login';
 import Modulepage from './pages/ModulePage';
+import ModuleLayoutPage from './pages/ModuleLayoutPage';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from "./contexts/AuthContext";
@@ -25,7 +26,11 @@ function App() {
       <AuthProvider>
         <TooltipProvider>
           <Routes>
-          <Route path="/" element={<Modulepage />} />
+          <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/assessments" element={<Modulepage />} />
+          <Route path="/assessment/:assessmentId" element={<ModuleLayoutPage />} />
 
 
             {/* <Route path="/" element={<Index />} />
