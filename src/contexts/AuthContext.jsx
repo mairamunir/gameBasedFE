@@ -1,51 +1,10 @@
+// src/contexts/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from '@/hooks/use-toast'; // Adjust this path if needed
+import { toast } from '@/hooks/use-toast';
+import api from '@/lib/api';
 
 const AuthContext = createContext(undefined);
-
-// Mock API functions (replace with actual API calls)
-const mockLogin = async (email, password) => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-
-  const mockUsers = {
-    'candidate@example.com': {
-      id: 'c123',
-      name: 'Test Candidate',
-      email: 'candidate@example.com',
-      role: 'candidate',
-    },
-    'recruiter@example.com': {
-      id: 'r456',
-      name: 'Test Recruiter',
-      email: 'recruiter@example.com',
-      role: 'recruiter',
-    },
-    'admin@example.com': {
-      id: 'a789',
-      name: 'Test Admin',
-      email: 'admin@example.com',
-      role: 'admin',
-    },
-  };
-
-  if (mockUsers[email] && password === 'password') {
-    return mockUsers[email];
-  }
-
-  throw new Error('Invalid credentials');
-};
-
-const mockSignup = async (name, email, password, role) => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-
-  return {
-    id: `user_${Math.random().toString(36).substr(2, 9)}`,
-    name,
-    email,
-    role,
-  };
-};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -60,61 +19,61 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   }, []);
 
+  //LOGIN
   const login = async (email, password) => {
     try {
       setIsLoading(true);
-      const user = await mockLogin(email, password);
+      const response = await api.post('/api/auth/login', { email, password });
+
+      const token = response.data.token;
+      const payload = JSON.parse(atob(token.split('.')[1])); // decode JWT
+
+      const user = {
+        id: payload.id,
+        name: payload.name,
+        email: payload.email,
+        role: payload.role,
+        token,
+      };
+
       setUser(user);
       localStorage.setItem('user', JSON.stringify(user));
 
-      if (user.role === 'candidate') {
-        navigate('/candidate-dashboard');
-      } else if (user.role === 'recruiter') {
-        navigate('/recruiter-dashboard');
-      } else if (user.role === 'admin') {
-        navigate('/admin-dashboard');
-      }
+      if (user.role === 'candidate') navigate('/candidate-dashboard');
+      else if (user.role === 'recruiter') navigate('/recruiter-dashboard');
+      else if (user.role === 'admin') navigate('/admin-dashboard');
 
       toast({
         title: 'Success',
         description: 'You have successfully logged in',
       });
     } catch (error) {
-      console.error('Login failed:', error);
       toast({
         title: 'Login Failed',
-        description: error?.message || 'An unknown error occurred',
+        description: error.response?.data?.message || 'An unknown error occurred',
         variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
     }
   };
-
+//REGISTER
   const signup = async (name, email, password, role) => {
     try {
       setIsLoading(true);
-      const user = await mockSignup(name, email, password, role);
-      setUser(user);
-      localStorage.setItem('user', JSON.stringify(user));
+      await api.post('/api/auth/register', { name, email, password, role });
 
-      if (role === 'candidate') {
-        navigate('/candidate-dashboard');
-      } else if (role === 'recruiter') {
-        navigate('/recruiter-dashboard');
-      } else if (role === 'admin') {
-        navigate('/admin-dashboard');
-      }
+      // Immediately login after successful registration
+      await login(email, password);
 
       toast({
         title: 'Account Created',
         description: 'Your account has been successfully created',
       });
     } catch (error) {
-      console.error('Signup failed:', error);
       toast({
         title: 'Signup Failed',
-        description: error?.message || 'An unknown error occurred',
+        description: error.response?.data?.message || 'An unknown error occurred',
         variant: 'destructive',
       });
     } finally {
@@ -122,6 +81,8 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
+  
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
