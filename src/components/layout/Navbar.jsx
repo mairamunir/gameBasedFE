@@ -158,6 +158,10 @@ const Navbar = () => {
                     <DropdownMenuItem asChild>
                       <Link to="/profile">Profile</Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem onClick={logout} className="cursor-pointer">
+                     <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                    </DropdownMenuItem>
                   </>
                 )}
 
