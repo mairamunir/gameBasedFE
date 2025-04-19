@@ -10,8 +10,8 @@ import { Brain, Clock, PlayCircle, CheckCircle2, Gamepad2 } from 'lucide-react';
 const assessmentModules = [
   {
     id: 1,
-    title: 'MBTI Assessment',
-    description: 'Discover your Myers-Briggs personality type through interactive scenarios.',
+    title: 'Leadership',
+    description: 'Identify your leadership style through strategic decision-making scenarios.',
     duration: '25 mins',
     progress: 0,
     status: 'not_started',
@@ -20,8 +20,8 @@ const assessmentModules = [
   },
   {
     id: 2,
-    title: 'Big Five Traits',
-    description: 'Evaluate your openness, conscientiousness, extraversion, agreeableness, and neuroticism.',
+    title: 'Professionalism',
+    description: 'Measure key personality traits that influence your workplace behavior and reliability.',
     duration: '30 mins',
     progress: 65,
     status: 'in_progress',
@@ -30,8 +30,8 @@ const assessmentModules = [
   },
   {
     id: 3,
-    title: 'Leadership Style',
-    description: 'Identify your leadership style through strategic decision-making scenarios.',
+    title: 'Teamwork',
+    description: 'Assess your ability to collaborate, communicate, and contribute effectively in team settings.',
     duration: '20 mins',
     progress: 100,
     status: 'completed',
@@ -110,14 +110,10 @@ const ModulePage = () => {
                 module.isUnity ? 'relative overflow-hidden' : ''
               }`}
             >
-              {module.isUnity && (
-                <div className="absolute top-0 right-0 bg-blue-500 text-white px-2 py-1 text-xs font-medium rounded-bl">
-                  Unity Game
-                </div>
-              )}
+              
               <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <div className={`h-10 w-10 rounded-lg ${module.isUnity ? 'bg-blue-100 text-blue-600' : 'bg-candidate-accent text-candidate-primary'} flex items-center justify-center`}>
+                  <div className={`h-10 w-10 rounded-lg ${module.isUnity ? 'bg-orange-100 text-orange-600' : 'bg-candidate-accent text-candidate-primary'} flex items-center justify-center`}>
                     <module.icon className="h-5 w-5" />
                   </div>
                   <div className="flex items-center text-sm text-gray-500">
