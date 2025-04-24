@@ -68,19 +68,19 @@ module.exports = {
           ring: 'hsl(var(--sidebar-ring))'
         },
         candidate: {
-          primary: '#F97316',
-          secondary: '#0EA5E9',
-          accent: '#FDE1D3',
+          primary: '#1B003F',
+          secondary: '#6495ED',
+          accent: '#F2E6EE',
         },
         recruiter: {
-          primary: '#2E5BFF',
-          secondary: '#4F46E5',
-          accent: '#D3E4FD',
+          primary: '#4B0082',
+          secondary: '#6495ED',
+          accent: '#F2E6EE',
         },
         admin: {
-          primary: '#333333',
-          secondary: '#555555',
-          accent: '#F1F1F1',
+          primary: '#4B0082',
+          secondary: '#6495ED',
+          accent: '#F2E6EE',
         }
       },
       borderRadius: {

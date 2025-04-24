@@ -268,11 +268,11 @@ const ModuleLayoutPage = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">{assessment.name}</h1>
-              <p className="text-gray-500">{assessment.description}</p>
+              <h1 className="text-2xl font-bold tracking-tight text-white">{assessment.name}</h1>
+              <p className="text-white">{assessment.description}</p>
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 bg-candidate-primary">
               <Button
                 variant="outline"
                 size="sm"
@@ -285,7 +285,7 @@ const ModuleLayoutPage = () => {
           
           {!useUnityInterface && (
             <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center justify-between text-sm text-white">
                 <span>Question {currentQuestionIndex + 1} of {assessment.questions.length}</span>
                 <span>{progress}% Complete</span>
               </div>

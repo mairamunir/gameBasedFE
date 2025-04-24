@@ -7,27 +7,27 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Clock, Award, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Mock data for badges
-const badges = [
-  {
-    id: 1,
-    name: 'First Assessment',
-    description: 'Completed your first assessment',
-    unlocked: true,
-  },
-  {
-    id: 2,
-    name: 'Quick Thinker',
-    description: 'Completed an assessment in record time',
-    unlocked: true,
-  },
-  {
-    id: 3,
-    name: 'Perfectionist',
-    description: 'Achieved 100% completion',
-    unlocked: false,
-  },
-];
+// // Mock data for badges
+// const badges = [
+//   {
+//     id: 1,
+//     name: 'First Assessment',
+//     description: 'Completed your first assessment',
+//     unlocked: true,
+//   },
+//   {
+//     id: 2,
+//     name: 'Quick Thinker',
+//     description: 'Completed an assessment in record time',
+//     unlocked: true,
+//   },
+//   {
+//     id: 3,
+//     name: 'Perfectionist',
+//     description: 'Achieved 100% completion',
+//     unlocked: false,
+//   },
+// ];
 
 const CandidateDashboard = () => {
   const { user } = useAuth();
@@ -36,8 +36,8 @@ const CandidateDashboard = () => {
     <PageLayout>
       <div className="container py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Candidate Dashboard</h1>
-          <p className="text-gray-500">
+          <h1 className="text-3xl font-bold tracking-tight text-white">Candidate Dashboard</h1>
+          <p className="text-white">
             Welcome back, {user?.name}! Continue your assessment journey.
           </p>
         </div>
@@ -81,7 +81,7 @@ const CandidateDashboard = () => {
             </CardContent>
           </Card>
 
-          <Card>
+          {/* <Card>
             <CardHeader className="pb-2">
               <CardTitle>Badges Earned</CardTitle>
               <CardDescription>Your achievements so far</CardDescription>
@@ -103,7 +103,7 @@ const CandidateDashboard = () => {
                 </Link>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
 
           <Card>
             <CardHeader className="pb-2">
