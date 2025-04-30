@@ -36,8 +36,8 @@ const CandidateDashboard = () => {
     <PageLayout>
       <div className="container py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Candidate Dashboard</h1>
-          <p className="text-gray-500">
+          <h1 className="text-3xl font-bold tracking-tight text-white">Candidate Dashboard</h1>
+          <p className="text-white">
             Welcome back, {user?.name}! Continue your assessment journey.
           </p>
         </div>

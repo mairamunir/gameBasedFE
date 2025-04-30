@@ -81,34 +81,7 @@ const LoginForm = () => {
               Sign up
             </Link>
           </p>
-          <div className="mt-2 space-y-2">
-            <p className="text-center text-sm text-gray-500">
-              Demo accounts (password: 'password'):
-            </p>
-            <div className="flex justify-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setEmail('candidate@example.com')}
-              >
-                Candidate
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setEmail('recruiter@example.com')}
-              >
-                Recruiter
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setEmail('admin@example.com')}
-              >
-                Admin
-              </Button>
-            </div>
-          </div>
+         
         </CardFooter>
       </form>
     </Card>

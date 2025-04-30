@@ -91,8 +91,8 @@ const ModulePage = () => {
     <PageLayout>
       <div className="container py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Assessments</h1>
-          <p className="text-gray-500">
+          <h1 className="text-3xl font-bold tracking-tight text-white">Assessments</h1>
+          <p className="text-white">
             Complete assessments to discover your strengths and personality traits.
           </p>
         </div>
@@ -111,19 +111,19 @@ const ModulePage = () => {
                 module.isUnity ? 'relative overflow-hidden' : ''
               }`}
             >
-              
+
               <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-4">
-                  <div className={`h-10 w-10 rounded-lg ${module.isUnity ? 'bg-orange-100 text-orange-600' : 'bg-candidate-accent text-candidate-primary'} flex items-center justify-center`}>
+                  <div className="h-12 w-12 rounded-lg bg-candidate-accent flex items-center justify-center mb-4">
                     <module.icon className="h-5 w-5" />
                   </div>
-                  <div className="flex items-center text-sm text-gray-500">
+                  <div className="flex items-center text-sm text-black">
                     <Clock className="mr-1 h-4 w-4" />
                     <span>{module.duration}</span>
                   </div>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{module.title}</h3>
-                <p className="text-gray-600 mb-6 text-sm">{module.description}</p>
+                <p className="text-black mb-6 text-sm">{module.description}</p>
                 {getModuleStatusElement(module.status, module.progress, module.isUnity)}
               </CardContent>
             </Card>

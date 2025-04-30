@@ -18,7 +18,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import './App.css';
 import { TooltipProvider } from './components/ui/tooltip';
-
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 
 function App() {
@@ -35,14 +35,26 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/assessments" element={<Modulepage />} />
+
+          {/* <Route path="/candidate-dashboard" element={<ProtectedRoute><CandidateDashboard />  </ProtectedRoute>} />
+
+          <Route path="/assessments" element={<ProtectedRoute><Modulepage /></ProtectedRoute>} />
+          <Route path="/assessment/:assessmentId" element={<ProtectedRoute><ModuleLayoutPage/></ProtectedRoute>} />
+          <Route path="/assessment-config" element={<ProtectedRoute><ModuleConfig /></ProtectedRoute>} />
+         
+          <Route path="/candidates" element={<ProtectedRoute><Candidates /></ProtectedRoute>} /> 
+          <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} />  
+          <Route path="/results/:assessmentId" element={<ProtectedRoute><Results /></ProtectedRoute>} /> 
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />         */}
+
+<Route path="/assessments" element={<Modulepage />} />
           <Route path="/assessment/:assessmentId" element={<ModuleLayoutPage />} />
           <Route path="/assessment-config" element={<ModuleConfig />} />
           <Route path="/candidate-dashboard" element={<CandidateDashboard />} />
           <Route path="/candidates" element={<Candidates />} /> 
           <Route path="/analytics" element={<Analytics />} />  
           <Route path="/results/:assessmentId" element={<Results />} /> 
-          <Route path="/profile" element={<Profile />} />        
+          <Route path="/profile" element={<Profile />} />   
           </Routes>
           
         </TooltipProvider>
