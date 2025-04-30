@@ -94,6 +94,66 @@
 
   body {
     @apply bg-background text-foreground font-sans;
+    position: relative;
+    overflow-x: hidden;
+    /* Full night sky with radial and linear gradients */
+    background: radial-gradient(
+      1500px 800px at 70% 30%,
+      hsla(232,35%,16%,0.9) 0%,
+      hsla(224,21%,24%,0.9) 50%,
+      hsla(232,35%,12%,1) 80%,
+      hsla(232,35%,10%,1) 100%
+    );
+  }
+
+  /* Subtle animated "starry" sky layer */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    /* Sparse elegant twinkle stars; you might want to generate a PNG or SVG sprite for stars as used below */
+    background: 
+      url("data:image/svg+xml,%3Csvg width='190' height='120' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3E @keyframes twinkle %7B 0%, 100% %7B opacity: 0.7; %7D 50% %7B opacity: 0.3; %7D %7D .a%7Bopacity:.9;animation:twinkle 3s infinite alternate;%7D .b%7Bopacity:.7;animation:twinkle 4.3s 1.3s infinite alternate;%7D .c%7Bopacity:.5;animation:twinkle 2.6s .8s infinite alternate;%7D %3C/style%3E%3Ccircle class='a' cx='31' cy='23' r='1.4' fill='white' /%3E%3Ccircle class='b' cx='147' cy='56' r='1.1' fill='white' /%3E%3Ccircle class='c' cx='88' cy='99' r='1.8' fill='white' /%3E%3Ccircle class='a' cx='173' cy='77' r='1' fill='white' /%3E%3Ccircle class='b' cx='62' cy='97' r='1' fill='white' /%3E%3Ccircle class='c' cx='102' cy='14' r='0.8' fill='white' /%3E%3Ccircle class='a' cx='182' cy='35' r='1.5' fill='white' /%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 350px 220px;
+    opacity: 0.55;
+    z-index: -1;
+    animation: none;
+  }
+}
+
+@layer components {
+  .game-card {
+    @apply relative overflow-hidden rounded-xl p-6 transition-all duration-300 hover:shadow-lg;
+    background: linear-gradient(135deg, hsla(224,21%,24%,0.36), hsla(280,92%,60%,0.42), hsla(232,35%,12%,0.95)); /* blues & magenta */
+    backdrop-filter: blur(8px);
+  }
+  
+  .game-card::before {
+    content: "";
+    @apply absolute inset-0 -z-10 bg-gradient-to-r opacity-40 transition-opacity duration-300;
+    background: linear-gradient(135deg, hsla(48,100%,94%,0.10) 0%, hsla(224,21%,24%,0.14) 50%, hsla(232,35%,12%,0.64) 100%);
+  }
+  
+  .game-card:hover::before {
+    @apply opacity-55;
+  }
+}
+
+
+
+/*
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
   }
 }
 
@@ -123,3 +183,4 @@
     @apply from-admin-primary to-admin-secondary;
   }
 }
+  */

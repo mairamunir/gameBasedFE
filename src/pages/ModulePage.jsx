@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Brain, Clock, PlayCircle, CheckCircle2, Gamepad2 } from 'lucide-react';
+import axios from 'axios';
 
 // Mock data for modules - moved from CandidateDashboard
 const assessmentModules = [
