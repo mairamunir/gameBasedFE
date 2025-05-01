@@ -33,16 +33,49 @@ const ModuleLayoutPage = () => {
     }
   }, [assessmentId, navigate]);
 
-  const handleUnityComplete = () => {
-    toast({
-      title: 'Assessment Completed',
-      description: 'Your Unity assessment has been completed successfully.',
-    });
+  // const handleUnityComplete = () => {
+  //   toast({
+  //     title: 'Assessment Completed',
+  //     description: 'Your Unity assessment has been completed successfully.',
+  //   });
 
-    setTimeout(() => {
-      navigate(`/results/${assessmentId}`);
-    }, 1500);
+  //   setTimeout(() => {
+  //     navigate(`/results/${assessmentId}`);
+  //   }, 1500);
+  // };
+
+  const handleUnityComplete = async (resultData) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/assessments/${assessmentId}/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`, // or use AuthContext
+        },
+        body: JSON.stringify(resultData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to save result');
+      }
+  
+      toast({
+        title: 'Assessment Completed',
+        description: 'Your result has been saved successfully.',
+      });
+  
+      setTimeout(() => {
+        navigate(`/assessments`);
+      }, 1500);
+    } catch (error) {
+      toast({
+        title: 'Error Saving Result',
+        description: error.message,
+        variant: 'destructive',
+      });
+    }
   };
+  
 
   return (
     <PageLayout>

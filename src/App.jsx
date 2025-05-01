@@ -35,6 +35,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/results" element={<Results/>} />
 
           {/* <Route path="/candidate-dashboard" element={<ProtectedRoute><CandidateDashboard />  </ProtectedRoute>} />
 

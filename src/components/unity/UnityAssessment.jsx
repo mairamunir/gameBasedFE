@@ -6,6 +6,10 @@ import { Progress } from '@/components/ui/progress';
 import { toast } from '@/hooks/use-toast';
 import { Save, AlertCircle } from 'lucide-react';
 import UnityEmbed from './UnityEmbed';
+import axios from 'axios';
+import { useAuth } from '../../contexts/AuthContext';
+import api from '@/lib/api'; 
+
 
 const UnityAssessment = ({
   assessmentId,
@@ -13,6 +17,7 @@ const UnityAssessment = ({
   onComplete,
   onSaveProgress
 }) => {
+  const { user } = useAuth();
   const [unityLoaded, setUnityLoaded] = useState(false);
   const [unityAvailable, setUnityAvailable] = useState(true);
   const [answers, setAnswers] = useState({});
@@ -64,12 +69,44 @@ const UnityAssessment = ({
           onComplete(data.answers);
           break;
 
-          case 'UPDATE_LEADERSHIP_SCORE':
-        console.log('Leadership Score from Unity:', data.score);
-        toast({
-          title: 'Score Received',
-          description: `Your leadership score is ${data.score}`,
-        });
+        //   case 'UPDATE_LEADERSHIP_SCORE':
+        // console.log('Leadership Score from Unity:', data.score);
+        // toast({
+        //   title: 'Score Received',
+        //   description: `Your leadership score is ${data.score}`,
+        // });
+        
+        case 'UPDATE_LEADERSHIP_SCORE':
+          console.log('Leadership Score from Unity:', data.score);
+        
+          toast({
+            title: 'Score Received',
+            description: `Your leadership score is ${data.score}`,
+          });
+        
+          (async () => {
+            try {
+              await api.put('/api/moduleResult/submit-module', {
+                // user_id: user.id,
+                // module_id: assessmentId,
+                user_id: '6813216d7d055ba886b68be9',
+                module_id: '681331a6a055013dccd17208',
+                ModuleScore: data.score,
+              });
+        
+              navigate(`/assessments`); // or to a specific module page
+            } catch (err) {
+              console.error('Error submitting module:', err);
+              toast({
+                title: 'Submission Failed',
+                description: 'Could not save your score. Please try again.',
+                variant: 'destructive',
+              });
+            }
+          })();
+        
+          break;
+        
 
         // You can optionally treat this as completion:
         onComplete?.({ score: data.score, answers });
@@ -130,7 +167,7 @@ const UnityAssessment = ({
       <div className="flex justify-center mt-6">  
       <UnityEmbed
   ref={unityRef}
-  src="https://prettywired.github.io/WebGL_text2/"
+  src="https://prettywired.github.io/leader/"
   width="1920px"
   height="1080px"
   onGameMessage={handleUnityMessage}
