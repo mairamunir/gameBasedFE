@@ -58,10 +58,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 //REGISTER
-  const signup = async (name, email, password, role) => {
+  const signup = async (full_name, email, password, role) => {
     try {
       setIsLoading(true);
-      await api.post('/api/auth/register', { name, email, password, role });
+      await api.post('/api/auth/register', { full_name, email, password, role });
 
       // Immediately login after successful registration
       await login(email, password);

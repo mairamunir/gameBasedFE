@@ -118,14 +118,14 @@ const UnityAssessment = ({
   }
 
   return (
-    <div className="space-y-6flex flex-col items-center w-full">
-      <div className="space-y-2 w-full max-w-4xl">
+    <div className="space-y-6 flex flex-col items-center w-full">
+      {/* <div className="space-y-2 w-full max-w-4xl">
         <div className="flex items-center justify-between text-sm">
           <span>Assessment Progress</span>
           <span>{progress}% Complete</span>
         </div>
         <Progress value={progress} className="h-2" />
-      </div>
+      </div> */}
       
       <div className="flex justify-center mt-6">  
       <UnityEmbed
