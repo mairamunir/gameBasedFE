@@ -1,3 +1,109 @@
+// src/pages/ModuleLayoutPage.jsx
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import api from "@/lib/api";            // axios with baseURL = VITE_API_URL
+import PageLayout from "@/components/layout/PageLayout";
+import UnityAssessment from "@/components/unity/UnityAssessment";
+import { toast } from "@/hooks/use-toast";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
+export default function ModuleLayoutPage() {
+  const { user } = useAuth();
+  const { assessmentId } = useParams();   // module_id
+  const navigate = useNavigate();
+
+  const [exitDialogOpen, setExitDialogOpen] = useState(false);
+
+  useEffect(() => {
+    if (!assessmentId || !user?.id) {
+      toast({
+        title: "Missing data",
+        description: "Cannot find module or user.",
+        variant: "destructive",
+      });
+      navigate("/assessments");
+    }
+  }, [assessmentId, user, navigate]);
+
+  const handleUnityComplete = async () => {
+    toast({ title: "Saving...", description: "Checking your progress." });
+
+    try {
+      // fetch total modules
+      const [{ data: tot }, { data: comp }] = await Promise.all([
+        api.get("/api/modules/total-modules"),
+        api.get("/api/moduleResult/completed-count", {
+          params: { user_id: user.id },
+        }),
+      ]);
+
+      const total = tot.totalModules;
+      const completed = comp.completedModules;
+
+      // if after finishing this one it's now equal to total, go results:
+      if (completed >= total) {
+        navigate(`/results/${assessmentId}`);
+      } else {
+        navigate("/assessments");
+      }
+    } catch (err) {
+      console.error("Error checking progress:", err);
+      toast({
+        title: "Error",
+        description: "Could not determine completion status.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  return (
+    <PageLayout>
+      <div className="container max-w-4xl py-10">
+        {/* Header + Exit button omitted for brevity */}
+
+        {/* Unity WebGL embed */}
+        <UnityAssessment
+          userId={user.id}
+          assessmentId={assessmentId}
+          onComplete={handleUnityComplete}
+        />
+
+        {/* Exit Dialog */}
+        <AlertDialog open={exitDialogOpen} onOpenChange={setExitDialogOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Exit Assessment?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Your progress will not be saved. Continue?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={() => navigate("/assessments")}>
+                Exit
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
+    </PageLayout>
+  );
+}
+
+
+///-------------------------------------------
+/*{
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
@@ -5,6 +111,7 @@ import { Button } from '@/components/ui/button';
 import UnityAssessment from '@/components/unity/UnityAssessment';
 import { toast } from '@/hooks/use-toast';
 import { ArrowLeft, ArrowRight, Save, AlertCircle } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,6 +124,7 @@ import {
 } from '@/components/ui/alert-dialog';
 
 const ModuleLayoutPage = () => {
+  const { user } = useAuth(); 
   const { assessmentId } = useParams();
   const navigate = useNavigate();
 
@@ -67,13 +175,14 @@ const ModuleLayoutPage = () => {
           </div>
         </div>
 
-        {/* Unity WebGL Game */}
+        
         <UnityAssessment 
+          userId={user.id} 
           assessmentId={assessmentId} 
           onComplete={handleUnityComplete}
         />
 
-        {/* Exit Dialog */}
+        
         <AlertDialog open={exitDialogOpen} onOpenChange={setExitDialogOpen}>
           <AlertDialogContent>
             <AlertDialogHeader>
@@ -105,7 +214,7 @@ const ModuleLayoutPage = () => {
 
 export default ModuleLayoutPage;
 
-
+}*/
 
 // import React, { useState, useEffect } from 'react';
 // import { useParams, useNavigate } from 'react-router-dom';

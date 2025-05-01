@@ -24,15 +24,16 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
       const response = await api.post('/api/auth/login', { email, password });
-
-      const token = response.data.token;
+      //const token = response.data.token;
+      console.log(response);
+      const { token, user: srvUser } = response.data;
       const payload = JSON.parse(atob(token.split('.')[1])); // decode JWT
-
+      console.log(payload);
       const user = {
-        id: payload.id,
-        name: payload.name,
-        email: payload.email,
-        role: payload.role,
+        id: srvUser._id,
+        name: srvUser.full_name,
+        email: srvUser.email,
+        role: srvUser.role,
         token,
       };
 

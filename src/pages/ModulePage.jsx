@@ -26,7 +26,8 @@ const ModulePage = () => {
     try {
       const response = await api.get('/api/modules');
       const modules = response.data.modules; // ✅ Corrected here
-  
+      console.log('raw modules from API:', modules)
+
       const formattedModules = modules.map((module) => ({
         id: module._id,
         title: module.name,
@@ -49,12 +50,12 @@ const ModulePage = () => {
   }, []);
 
   // Function to return the module status element
-  const getModuleStatusElement = (status, progress) => {
+  const getModuleStatusElement = (status, progress, id) => {
     switch (status) {
       case 'not_started':
         return (
           <Button asChild>
-            <Link to={`/assessment/1`} className="inline-flex items-center">
+            <Link to={`/assessment/${id}`} className="inline-flex items-center">
               <PlayCircle className="mr-2 h-4 w-4" />
               Start
             </Link>
@@ -69,7 +70,7 @@ const ModulePage = () => {
             </div>
             <Progress value={progress} className="h-2" />
             <Button asChild variant="outline" size="sm" className="mt-2 w-full">
-              <Link to={`/assessment/2`}>
+              <Link to={`/assessment/${id}`}>
                 Continue
               </Link>
             </Button>
@@ -83,7 +84,7 @@ const ModulePage = () => {
               <span>Completed</span>
             </div>
             <Button asChild variant="outline" size="sm">
-              <Link to={`/results/3`}>
+              <Link to={`/results/${id}`}>
                 View Results
               </Link>
             </Button>
@@ -130,7 +131,7 @@ const ModulePage = () => {
   </div>
   <h3 className="text-xl font-semibold mb-2">{module.title}</h3>
   <p className="text-black mb-6 text-sm">{module.description}</p>
-  {getModuleStatusElement(module.status, module.progress)}
+  {getModuleStatusElement(module.status, module.progress, module.id)}
 </CardContent>
             </Card>
           ))}
