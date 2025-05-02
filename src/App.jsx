@@ -53,7 +53,7 @@ function App() {
           <Route path="/candidate-dashboard" element={<CandidateDashboard />} />
           <Route path="/candidates" element={<Candidates />} /> 
           <Route path="/analytics" element={<Analytics />} />  
-          <Route path="/results/:assessmentId" element={<Results />} /> 
+          <Route path="/results" element={<Results />} /> 
           <Route path="/profile" element={<Profile />} />   
           </Routes>
           

@@ -53,7 +53,7 @@ export default function ModuleLayoutPage() {
 
       // if after finishing this one it's now equal to total, go results:
       if (completed >= total) {
-        navigate(`/results/${assessmentId}`);
+        navigate("/results");
       } else {
         navigate("/assessments");
       }
@@ -70,7 +70,25 @@ export default function ModuleLayoutPage() {
   return (
     <PageLayout>
       <div className="container max-w-4xl py-10">
-        {/* Header + Exit button omitted for brevity */}
+      <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-2xl font-bold tracking-tight text-white">Unity Assessment</h1>
+              <p className="text-white">Please complete the Unity WebGL assessment below.</p>
+            </div>
+            
+            <div className="flex items-center gap-4 bg-candidate-primary">
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-20"
+                onClick={() => setExitDialogOpen(true)}
+              >
+                Exit
+              </Button>
+            </div>
+          </div>
+        </div>
 
         {/* Unity WebGL embed */}
         <UnityAssessment
@@ -99,8 +117,11 @@ export default function ModuleLayoutPage() {
       </div>
     </PageLayout>
   );
-}
+};
 
+
+
+//export default ModuleLayoutPage;
 
 ///-------------------------------------------
 /*{

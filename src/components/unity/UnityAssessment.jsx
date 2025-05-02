@@ -5,6 +5,7 @@ import { toast } from '@/hooks/use-toast';
 import { Save } from 'lucide-react';
 import UnityEmbed from './UnityEmbed';
 import api from '@/lib/api'; // your axios instance, baseURL = VITE_API_URL
+import { useAuth } from "@/contexts/AuthContext";
 
 const TOTAL_QUESTIONS = 7;
 
@@ -18,15 +19,39 @@ const UnityAssessment = ({
   const [unityAvailable, setUnityAvailable] = useState(true);
   const [answers, setAnswers]       = useState({});
   const [progress, setProgress]     = useState(0);
+  const [webglUrl, setWebglUrl] = useState(null);
   const unityRef = useRef(null);
+
+
+  useEffect(() => {
+    api.get(`/api/modules/${assessmentId}`)
+      .then(({ data }) => {
+        setWebglUrl(data.module.webgl_url);
+      })
+      .catch(err => {
+        console.error('Failed to fetch module info:', err);
+      });
+  }, [assessmentId]);
 
   // 1️⃣ Tell backend we started
   useEffect(() => {
     api.post('/api/moduleResult/start-module', {
       user_id: userId,
       module_id: assessmentId,
+    }).then(({ data }) => {
+      console.log('Module start response:', data);
     }).catch(err => {
-      console.error('Failed to start module:', err);
+      if (err.response?.status === 409) {
+        // conflict → already completed
+        alert("You have already completed this module! Please move on to the next one.");
+      } else {
+        console.error('Failed to start module:', err);
+        toast({
+          title: 'Error',
+          description: 'Could not start module.',
+          variant: 'destructive',
+        });
+      }
     });
   }, [userId, assessmentId]);
 
@@ -133,29 +158,21 @@ const UnityAssessment = ({
     return <UnityPlaceholder />;
   }
 
+  if (!webglUrl) return <p>Loading module...</p>;
+
   return (
     <div className="flex flex-col items-center w-full space-y-6">
       <div className="flex justify-center mt-6">
         <UnityEmbed
           ref={unityRef}
-          //src="https://prettywired.github.io/leadership/"
-          src="https://prettywired.github.io/leader/"
+          src={webglUrl}
+          //src="https://prettywired.github.io/leader/"
+          //src="https://prettywired.github.io/WebGL_text2/"
           width="100%"
           height="100%"
           onGameMessage={handleUnityMessage}
         />
       </div>
-
-      {progress > 0 && progress < 100 && (
-        <Button
-          onClick={() => onSaveProgress(answers)}
-          variant="outline"
-          className="flex items-center"
-        >
-          <Save className="mr-2 h-4 w-4" />
-          Save Progress
-        </Button>
-      )}
     </div>
   );
 };
