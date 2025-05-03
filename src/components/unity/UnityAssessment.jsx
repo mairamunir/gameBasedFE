@@ -22,16 +22,19 @@ const UnityAssessment = ({
   const [webglUrl, setWebglUrl] = useState(null);
   const unityRef = useRef(null);
 
+  
 
   useEffect(() => {
     api.get(`/api/modules/${assessmentId}`)
       .then(({ data }) => {
-        setWebglUrl(data.module.webgl_url);
+        setWebglUrl(data.webgl_url);
       })
       .catch(err => {
         console.error('Failed to fetch module info:', err);
       });
   }, [assessmentId]);
+
+  console.log("web link:", webglUrl);
 
   // 1️⃣ Tell backend we started
   useEffect(() => {
