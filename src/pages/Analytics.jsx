@@ -117,7 +117,219 @@ const Analytics = () => {
           </TabsList>
 
           {/* TabsContent blocks */}
-          {/* ... All JSX content blocks remain unchanged ... */}
+          <TabsContent value="overview">
+            <div className="grid gap-8 md:grid-cols-2">
+              {/* Assessment Completion Trends */}
+              <Card className="md:col-span-2">
+                <CardHeader>
+                  <CardTitle>Assessment Completion Trends</CardTitle>
+                  <CardDescription>Monthly assessment completions and pending assessments</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        data={monthlyCompletionData}
+                        margin={{
+                          top: 20,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="completed" stackId="a" fill="#8B5CF6" name="Completed" />
+                        <Bar dataKey="pending" stackId="a" fill="#D946EF" name="Pending" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Personality Distribution */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Personality Distribution</CardTitle>
+                  <CardDescription>Distribution of personality types among candidates</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={personalityDistributionData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={90}
+                          fill="#8884d8"
+                          paddingAngle={2}
+                          dataKey="value"
+                          label
+                        >
+                          {personalityDistributionData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Skills Distribution */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Skills Distribution</CardTitle>
+                  <CardDescription>Top skills among candidates</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart
+                        layout="vertical"
+                        data={skillsDistributionData}
+                        margin={{
+                          top: 20,
+                          right: 30,
+                          left: 70,
+                          bottom: 5,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis type="number" />
+                        <YAxis dataKey="name" type="category" />
+                        <Tooltip />
+                        <Bar dataKey="candidates" fill="#0EA5E9" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="candidates">
+            <div className="grid gap-8 md:grid-cols-2">
+              {/* Personality Distribution */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Personality Traits</CardTitle>
+                  <CardDescription>Top personality traits among candidates</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {personalityTraitsData.map((trait, index) => (
+                      <div key={index}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm font-medium">{trait.trait}</span>
+                          <span className="text-sm">{trait.percentage}%</span>
+                        </div>
+                        <Progress value={trait.percentage} className="h-2" />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Candidate Growth */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Candidate Growth</CardTitle>
+                  <CardDescription>Monthly candidate registration trends</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <AreaChart
+                        data={assessmentTrendsData}
+                        margin={{
+                          top: 10,
+                          right: 30,
+                          left: 0,
+                          bottom: 0,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Area type="monotone" dataKey="assessments" stroke="#8B5CF6" fill="#8B5CF6" fillOpacity={0.3} />
+                      </AreaChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="assessments">
+            <div className="grid gap-8 md:grid-cols-2">
+              {/* Assessment Completion Rate */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Assessment Completion Rate</CardTitle>
+                  <CardDescription>Monthly completion rate trends</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={assessmentTrendsData}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="completion" stroke="#10B981" activeDot={{ r: 8 }} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+              
+              {/* Assessment Volume */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Assessment Volume</CardTitle>
+                  <CardDescription>Monthly assessment volume trends</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={assessmentTrendsData}
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line type="monotone" dataKey="assessments" stroke="#F97316" activeDot={{ r: 8 }} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
     </PageLayout>

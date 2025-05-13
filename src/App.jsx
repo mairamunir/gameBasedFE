@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 import Index from './pages/index';
 import Signup from './pages/signup';
 import Login from './pages/login';
@@ -11,6 +13,10 @@ import Candidates from "./pages/Candidates";
 import Analytics from "./pages/Analytics";
 import Results from "./pages/Results";
 import Profile from "./pages/Profile";
+import RecruiterDashboard from "./pages/RecruiterDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+import ModuleEditor from "./pages/ModuleEditor";
+import SystemSettings from "./pages/SystemSettings";
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from "./contexts/AuthContext";
@@ -54,9 +60,15 @@ function App() {
           <Route path="/candidates" element={<Candidates />} /> 
           <Route path="/analytics" element={<Analytics />} />  
           <Route path="/results" element={<Results />} /> 
-          <Route path="/profile" element={<Profile />} />   
+          <Route path="/profile" element={<Profile />} /> 
+          <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} /> 
+          <Route path="/admin-dashboard" element={<AdminDashboard />} /> 
+          <Route path="/module-editor" element={<ModuleEditor />} />
+          <Route path="/system-settings" element={<SystemSettings />} />
           </Routes>
           
+          <Toaster />
+          <Sonner />
         </TooltipProvider>
       </AuthProvider>
     </BrowserRouter>
