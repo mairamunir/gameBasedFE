@@ -55,22 +55,22 @@ const candidateEducation = [
 ];
 
 // Mock assessment results for candidate profile
-const candidateAssessments = [
-  {
-    id: 1,
-    name: "MBTI Assessment",
-    result: "INTJ",
-    completedDate: "2025-03-20",
-    score: 92,
-  },
-  {
-    id: 2,
-    name: "Big Five Traits",
-    result: "High Openness, High Conscientiousness",
-    completedDate: "2025-03-22",
-    score: 88,
-  }
-];
+// const candidateAssessments = [
+//   {
+//     id: 1,
+//     name: "MBTI Assessment",
+//     result: "INTJ",
+//     completedDate: "2025-03-20",
+//     score: 92,
+//   },
+//   {
+//     id: 2,
+//     name: "Big Five Traits",
+//     result: "High Openness, High Conscientiousness",
+//     completedDate: "2025-03-22",
+//     score: 88,
+//   }
+// ];
 
 // Mock recruiter department data
 const recruiterDepartments = [
@@ -227,7 +227,7 @@ const Profile = () => {
         </Card>
         
         {/* Assessment Results Section */}
-        <Card className="mb-6">
+        {/* <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Brain className="mr-2 h-5 w-5" />
@@ -249,16 +249,16 @@ const Profile = () => {
                 </div>
               ))}
             </div>
-          </CardContent>
-          <CardFooter>
+          </CardContent> */}
+          {/* <CardFooter>
             <Button variant="outline" className="w-full" asChild>
               <a href="/assessments">View All Assessments</a>
             </Button>
-          </CardFooter>
-        </Card>
+          </CardFooter> 
+        </Card>*/}
         
         {/* Badges Section */}
-        <Card>
+        {/* <Card>
           <CardHeader>
             <CardTitle className="flex items-center">
               <Award className="mr-2 h-5 w-5" />
@@ -278,7 +278,7 @@ const Profile = () => {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </>
     );
   };

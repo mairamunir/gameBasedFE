@@ -37,7 +37,7 @@ export default function Results() {
         const results = resR.data.module_results;
         const modules = resM.data.modules;
 
-        if (!results.length) {
+        if (!results.length || results.length < modules.length) {
           setIncompleteDialogOpen(true); // 👈 show dialog if no results
         }
 

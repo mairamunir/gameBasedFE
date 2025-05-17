@@ -16,32 +16,29 @@ import { useAuth } from '@/contexts/AuthContext';
 const summaryStats = [
   {
     title: 'Total Candidates',
-    value: 24,
-    change: '+4',
+    value: 11,
     icon: Users,
     color: 'bg-recruiter-accent text-recruiter-primary',
   },
   {
-    title: 'Assessments Completed',
-    value: 18,
-    change: '+2',
+    title: 'Assessments Completed By Candidates',
+    value: 8,
     icon: FileCheck,
     color: 'bg-emerald-100 text-emerald-600',
   },
   {
     title: 'Avg. Completion Rate',
-    value: '75%',
-    change: '+5%',
+    value: '72.2%',
     icon: Activity,
     color: 'bg-amber-100 text-amber-600',
   },
-  {
-    title: 'Most Common Trait',
-    value: 'Introversion',
-    change: '',
-    icon: BarChart3,
-    color: 'bg-violet-100 text-violet-600',
-  },
+  // {
+  //   title: 'Most Common Trait',
+  //   value: 'Introversion',
+  //   change: '',
+  //   icon: BarChart3,
+  //   color: 'bg-violet-100 text-violet-600',
+  // },
 ];
 
 const RecruiterDashboard = () => {
@@ -51,8 +48,8 @@ const RecruiterDashboard = () => {
     <PageLayout>
       <div className="container py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Hello, {user?.name || 'Recruiter'}</h1>
-          <p className="text-gray-500">
+          <h1 className="text-3xl font-bold tracking-tight text-white">Hello, {user?.name || 'Recruiter'}</h1>
+          <p className="text-white">
             You are viewing the recruiter dashboard
           </p>
         </div>

@@ -23,7 +23,7 @@ const ModulePage = () => {
   const [error, setError] = useState(null);
 
   const { user } = useAuth(); // <-- get logged-in user
-  console.log(user.id)
+  console.log(user.id);
 
   const fetchModules = async () => {
     try {

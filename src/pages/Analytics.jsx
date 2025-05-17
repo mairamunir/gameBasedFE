@@ -36,12 +36,12 @@ import {
 } from 'lucide-react';
 
 const monthlyCompletionData = [
-  { name: 'Jan', completed: 5, pending: 2 },
-  { name: 'Feb', completed: 8, pending: 3 },
-  { name: 'Mar', completed: 6, pending: 1 },
-  { name: 'Apr', completed: 12, pending: 4 },
-  { name: 'May', completed: 9, pending: 2 },
-  { name: 'Jun', completed: 11, pending: 3 },
+ // { name: 'Jan', completed: 5, pending: 2 },
+  //{ name: 'Feb', completed: 8, pending: 3 },
+  //{ name: 'Mar', completed: 6, pending: 1 },
+  //{ name: 'Apr', completed: 12, pending: 4 },
+  { name: 'May', completed: 9, pending: 3},
+  //{ name: 'Jun', completed: 11, pending: 3 },
 ];
 
 const personalityDistributionData = [
@@ -53,20 +53,20 @@ const personalityDistributionData = [
 ];
 
 const skillsDistributionData = [
-  { name: 'Problem Solving', candidates: 65 },
-  { name: 'Communication', candidates: 55 },
-  { name: 'Leadership', candidates: 40 },
-  { name: 'Critical Thinking', candidates: 70 },
-  { name: 'Teamwork', candidates: 60 },
+  { name: 'Emotional Intelligence', candidates: 20 },
+ // { name: 'Communication', candidates: 55 },
+  { name: 'Leadership', candidates: 35 },
+//  { name: 'Critical Thinking', candidates: 70 },
+ // { name: 'Teamwork', candidates: 60 },
 ];
 
 const assessmentTrendsData = [
-  { month: 'Jan', assessments: 20, completion: 75 },
-  { month: 'Feb', assessments: 25, completion: 70 },
-  { month: 'Mar', assessments: 30, completion: 80 },
-  { month: 'Apr', assessments: 22, completion: 85 },
+  //{ month: 'Jan', assessments: 20, completion: 75 },
+  //{ month: 'Feb', assessments: 25, completion: 70 },
+  //{ month: 'Mar', assessments: 30, completion: 80 },
+  //{ month: 'Apr', assessments: 22, completion: 85 },
   { month: 'May', assessments: 28, completion: 78 },
-  { month: 'Jun', assessments: 35, completion: 82 },
+  //{ month: 'Jun', assessments: 35, completion: 82 },
 ];
 
 const personalityTraitsData = [
@@ -85,21 +85,17 @@ const Analytics = () => {
         {/* Header */}
         <div className="mb-8 flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Analytics</h1>
-            <p className="text-gray-500">
+            <h1 className="text-3xl font-bold tracking-tight text-white">Analytics</h1>
+            <p className="text-white">
               Track candidate performance and assessment metrics
             </p>
           </div>
-          <div className="flex gap-3">
-            <Button variant="outline" size="sm">
-              <Calendar className="h-4 w-4 mr-2" />
-              Last 6 months
-            </Button>
+          {/* <div className="flex gap-3">
             <Button variant="outline" size="sm">
               <Download className="h-4 w-4 mr-2" />
               Export
             </Button>
-          </div>
+          </div> */}
         </div>
 
         {/* KPI Cards */}
@@ -150,38 +146,6 @@ const Analytics = () => {
                 </CardContent>
               </Card>
               
-              {/* Personality Distribution */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Personality Distribution</CardTitle>
-                  <CardDescription>Distribution of personality types among candidates</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={personalityDistributionData}
-                          cx="50%"
-                          cy="50%"
-                          innerRadius={60}
-                          outerRadius={90}
-                          fill="#8884d8"
-                          paddingAngle={2}
-                          dataKey="value"
-                          label
-                        >
-                          {personalityDistributionData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                        <Legend />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
               
               {/* Skills Distribution */}
               <Card>
@@ -217,26 +181,7 @@ const Analytics = () => {
           
           <TabsContent value="candidates">
             <div className="grid gap-8 md:grid-cols-2">
-              {/* Personality Distribution */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Personality Traits</CardTitle>
-                  <CardDescription>Top personality traits among candidates</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {personalityTraitsData.map((trait, index) => (
-                      <div key={index}>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm font-medium">{trait.trait}</span>
-                          <span className="text-sm">{trait.percentage}%</span>
-                        </div>
-                        <Progress value={trait.percentage} className="h-2" />
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              
               
               {/* Candidate Growth */}
               <Card>

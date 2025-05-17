@@ -27,7 +27,7 @@ const CandidateDashboard = () => {
         // Fetch completed modules count for current user
         const completedRes = await axios.get('/api/moduleResult/completed-count');
         console.log(completedRes); ////need to check /api/moduleResult/completed-count response on postman cause data give some doctype file in developer's console
-        setCompletedCount(completedRes.data.completedModules);
+        setCompletedCount(completedRes.data.count);
 
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
@@ -45,8 +45,14 @@ const CandidateDashboard = () => {
   }, [user]);
 
   // Progress calculations
-  const progressPercentage = totalModules > 0 ? Math.round((completedCount / totalModules) * 100) : 0;
-  const notStartedCount = totalModules - completedCount;
+  const progressPercentage = totalModules > 0 ? Math.round((completedCount / totalModules) * 100) : 0; 
+  console.log("agaya bhai 2");
+  console.log("agaya bhai 2 totalModules: ",totalModules);
+  console.log("agaya bhai 2 completedCount: ",completedCount);
+  const notStartedCount = totalModules - completedCount; 
+  console.log("agaya bhai 3");
+  console.log("agaya bhai 3: ",notStartedCount);
+
 
   const handleViewResults = () => {
     if (completedCount < totalModules) {
@@ -66,51 +72,58 @@ const CandidateDashboard = () => {
 
   return (
     <PageLayout hideNavbar>
-      <div className="flex flex-col items-center justify-center h-screen space-y-6 text-white">
-        <h1 className="text-4xl font-bold">Welcome back, {user?.name}!</h1>
-        <p className="text-lg">Continue your assessment journey.</p>
+  <div className="container py-10">
+    <div className="mb-8">
+      <h1 className="text-4xl font-bold text-white">Welcome back, {user?.name}!</h1>
+      <p className="text-lg text-white">Continue your assessment journey.</p>
+    </div>
 
-        <div className="flex flex-col gap-4">
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle>Assessment Progress</CardTitle>
-              <CardDescription>Your overall completion rate</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Overall</span>
-                  <span className="text-sm font-medium">{progressPercentage}%</span>
-                </div>
-                <Progress value={progressPercentage} className="h-2" />
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <div className="flex items-center">
-                    <div className="mr-1 h-2 w-2 rounded-full bg-candidate-primary"></div>
-                    <span>Completed: {completedCount}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className="mr-1 h-2 w-2 rounded-full bg-gray-300"></div>
-                    <span>Not Started: {notStartedCount}</span>
-                  </div>
-                </div>
+    {/* Grid of cards */}
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle>Assessment Progress</CardTitle>
+          <CardDescription>Your overall completion rate</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium">Overall</span>
+              <span className="text-sm font-medium">{progressPercentage}%</span>
+            </div>
+            <Progress value={progressPercentage} className="h-2" />
+            <div className="flex items-center justify-between text-sm text-gray-500">
+              <div className="flex items-center">
+                <div className="mr-1 h-2 w-2 rounded-full bg-candidate-primary"></div>
+                <span>Completed: {completedCount}</span>
               </div>
-              <div className="mt-4">
-                <Button asChild variant="outline" size="sm" className="w-full">
-                  <Link to="/assessments" className="flex items-center justify-center">
-                    <LinkIcon className="mr-2 h-4 w-4" />
-                    View All Assessments
-                  </Link>
-                </Button>
+              <div className="flex items-center">
+                <div className="mr-1 h-2 w-2 rounded-full bg-gray-300"></div>
+                <span>Not Started: {notStartedCount}</span>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+        <div className="mt-4 space-y-2">
+  <Button asChild variant="outline" size="sm" className="w-full">
+    <Link to="/assessments" className="flex items-center justify-center">
+      <LinkIcon className="mr-2 h-4 w-4" />
+      View All Assessments
+    </Link>
+  </Button>
+  
+  <Button onClick={handleViewResults} variant="secondary" size="sm" className="w-full">
+    View Results
+  </Button>
+</div>
 
-          <Button onClick={handleViewResults} className="text-lg" variant="secondary">
-            View Results
-          </Button>
-        </div>
-      </div>
-    </PageLayout>
+        </CardContent>
+      </Card>
+      
+    </div>
+
+   
+  </div>
+</PageLayout>
   );
 };
 

@@ -75,7 +75,7 @@ const SignupForm = () => {
               required
             />
           </div>
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label htmlFor="role">Role</Label>
             <Select value={role} onValueChange={handleRoleChange}>
               <SelectTrigger>
@@ -90,7 +90,7 @@ const SignupForm = () => {
             <p className="text-xs text-gray-500">
               In a real application, recruiter and admin roles would require approval.
             </p>
-          </div>
+          </div> */}
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
             <Input

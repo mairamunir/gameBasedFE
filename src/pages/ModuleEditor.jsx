@@ -17,44 +17,35 @@ import { toast } from '@/hooks/use-toast';
 const initialModules = [
   {
     id: 1,
-    name: 'MBTI Assessment',
-    type: 'personality',
-    description: 'Myers-Briggs Type Indicator assessment to determine personality type.',
-    questions: 20,
+    name: 'Leadership',
+    type: 'Aptitude',
+    //description: 'Myers-Briggs Type Indicator assessment to determine personality type.',
+    questions: 5,
     timeLimit: 15,
     status: 'active',
     updated: '2025-03-22',
   },
   {
     id: 2,
-    name: 'Big Five Traits',
+    name: 'Emotional intelligence',
     type: 'personality',
-    description: 'Assessment of the five broad dimensions of personality.',
-    questions: 25,
+    //description: 'Assessment of the five broad dimensions of personality.',
+    questions: 5,
     timeLimit: 20,
     status: 'active',
     updated: '2025-03-25',
   },
   {
     id: 3,
-    name: 'Leadership Style',
-    type: 'aptitude',
-    description: 'Evaluation of leadership qualities and style preferences.',
-    questions: 15,
+    name: 'Teamwork',
+    type: 'behavioral',
+    //description: 'Evaluation of leadership qualities and style preferences.',
+    questions: 5,
     timeLimit: 12,
     status: 'active',
     updated: '2025-03-10',
   },
-  {
-    id: 4,
-    name: 'Team Collaboration',
-    type: 'behavioral',
-    description: 'Assessment of teamwork and collaboration abilities.',
-    questions: 18,
-    timeLimit: 15,
-    status: 'draft',
-    updated: '2025-04-01',
-  },
+  
 ];
 
 const ModuleEditor = () => {
@@ -168,8 +159,8 @@ const ModuleEditor = () => {
       <div className="container py-10">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Module Editor</h1>
-            <p className="text-gray-500">
+            <h1 className="text-3xl font-bold tracking-tight text-white">Module Editor</h1>
+            <p className="text-white">
               Create, edit, and manage assessment modules
             </p>
           </div>
@@ -199,7 +190,7 @@ const ModuleEditor = () => {
                   <TableHead>Module Name</TableHead>
                   <TableHead>Type</TableHead>
                   <TableHead>Questions</TableHead>
-                  <TableHead>Time Limit</TableHead>
+                  <TableHead>Avg Time</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Last Updated</TableHead>
                   <TableHead className="text-right">Actions</TableHead>

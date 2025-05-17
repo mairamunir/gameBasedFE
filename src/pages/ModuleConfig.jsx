@@ -20,52 +20,36 @@ import {
 const availableModules = [
   {
     id: 1,
-    name: 'Cognitive Ability',
-    description: 'Measures problem-solving, critical thinking, and learning ability',
-    icon: Brain,
-    defaultSelected: true,
-    duration: '25 min'
-  },
-  {
-    id: 2,
-    name: 'Personality Assessment',
-    description: 'Evaluates personality traits, work preferences, and cultural fit',
-    icon: Puzzle,
+    name: 'Leadership',
+    //description: 'Assesses decision-making and judgment in work scenarios',
+    icon: Lightbulb,
     defaultSelected: true,
     duration: '20 min'
   },
   {
-    id: 3,
-    name: 'Situational Judgment',
-    description: 'Assesses decision-making and judgment in work scenarios',
-    icon: Lightbulb,
-    defaultSelected: false,
+    id: 2,
+    name: 'Emotional Intelligence',
+    //description: 'Evaluates personality traits, work preferences, and cultural fit',
+    icon: Puzzle,
+    defaultSelected: true,
     duration: '15 min'
   },
   {
-    id: 4,
-    name: 'Leadership Potential',
-    description: 'Measures leadership qualities and management potential',
-    icon: Users,
-    defaultSelected: false,
-    duration: '30 min'
-  },
-  {
-    id: 5,
-    name: 'Time Management',
-    description: 'Evaluates organization and prioritization skills',
+    id: 3,
+    name: 'Teamwork',
+    //description: 'Evaluates organization and prioritization skills',
     icon: Clock,
     defaultSelected: true,
-    duration: '10 min'
+    duration: '20 min'
   },
-  {
-    id: 6,
-    name: 'Professional Ethics',
-    description: 'Assesses ethics and integrity in professional settings',
-    icon: BadgeCheck,
-    defaultSelected: false,
-    duration: '15 min'
-  },
+  // {
+  //   id: 3,
+  //   name: 'Decision Making',
+  //   //description: 'Evaluates organization and prioritization skills',
+  //   icon: Clock,
+  //   defaultSelected: false,
+  //   duration: '20 min'
+  // },
 ];
 
 const ModuleConfig = () => {
@@ -101,8 +85,8 @@ const ModuleConfig = () => {
     <PageLayout>
       <div className="container py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Assessment Configuration</h1>
-          <p className="text-gray-500">
+          <h1 className="text-3xl font-bold tracking-tight text-white">Assessment Configuration</h1>
+          <p className="text-white">
             Select which modules to include in candidate assessments
           </p>
         </div>
