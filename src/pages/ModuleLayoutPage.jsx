@@ -22,10 +22,29 @@ export default function ModuleLayoutPage() {
   const { user } = useAuth();
   const { assessmentId } = useParams();   // module_id
   const navigate = useNavigate();
-
+  const [moduleName, setModuleName] = useState('');
   const [exitDialogOpen, setExitDialogOpen] = useState(false);
 
+
   useEffect(() => {
+    const fetchModuleName = async () => {
+    try {
+      const response = await api.get(`/api/modules/${assessmentId}`);
+      setModuleName(response.data.name);
+    } catch (error) {
+      console.error('Error fetching module details:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to fetch module details.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  if (assessmentId) {
+    fetchModuleName();
+  }
+
     if (!assessmentId || !user?.id) {
       toast({
         title: "Missing data",
@@ -73,8 +92,8 @@ export default function ModuleLayoutPage() {
       <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white">Unity Assessment</h1>
-              <p className="text-white">Please complete the Unity WebGL assessment below.</p>
+              <h1 className="text-2xl font-bold tracking-tight text-white">{moduleName || "Loading..."}</h1>
+              <p className="text-white">Please complete the assessment below.</p>
             </div>
             
             <div className="flex items-center gap-4 bg-candidate-primary">

@@ -8,6 +8,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Link as LinkIcon } from 'lucide-react';
+import api from '@/lib/api';
 
 const CandidateDashboard = () => {
   const { user } = useAuth();
@@ -19,17 +20,17 @@ const CandidateDashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // Fetch total modules count
-        const totalModulesRes = await axios.get('/api/modules/total-modules');
-        console.log(totalModulesRes);//need to check /api/modules/total-modules response on postman cause data give some doctype file in developer's console
-        setTotalModules(totalModulesRes.data.totalModules);
-
-        // Fetch completed modules count for current user
-        const completedRes = await axios.get('/api/moduleResult/completed-count');
-        console.log(completedRes); ////need to check /api/moduleResult/completed-count response on postman cause data give some doctype file in developer's console
+        const [
+          totalModulesRes,
+          completedRes
+        ] = await Promise.all([
+          api.get('/api/modules/total-modules'),
+          api.get(`/api/moduleResult/completed-count?user_id=${user?.id}`),
+        ]);
+        setTotalModules(totalModulesRes.data.totalModules); 
         setCompletedCount(completedRes.data.count);
-
-      } catch (err) {
+      }
+      catch (err) {
         console.error("Error fetching dashboard data:", err);
         setTotalModules(0);
         setCompletedCount(0);
@@ -39,24 +40,19 @@ const CandidateDashboard = () => {
     };
 
     if (user) {
-      console.log("agaya bhai 1")
       fetchDashboardData();
     }
   }, [user]);
 
   // Progress calculations
   const progressPercentage = totalModules > 0 ? Math.round((completedCount / totalModules) * 100) : 0; 
-  console.log("agaya bhai 2");
-  console.log("agaya bhai 2 totalModules: ",totalModules);
-  console.log("agaya bhai 2 completedCount: ",completedCount);
   const notStartedCount = totalModules - completedCount; 
-  console.log("agaya bhai 3");
-  console.log("agaya bhai 3: ",notStartedCount);
 
 
   const handleViewResults = () => {
     if (completedCount < totalModules) {
       alert("You still have modules left, please complete them first.");
+      navigate('/results');
     } else {
       navigate('/results');
     }
