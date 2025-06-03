@@ -56,6 +56,7 @@ export default function ModuleLayoutPage() {
   }, [assessmentId, user, navigate]);
 
   const handleUnityComplete = async () => {
+    console.log("unity module completed.")
     toast({ title: "Saving...", description: "Checking your progress." });
 
     try {
