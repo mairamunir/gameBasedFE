@@ -31,14 +31,14 @@ export default function Results() {
 
     Promise.all([
       api.get(`/api/moduleResult/user/${user.id}`),
-      api.get('/api/modules')
+      api.get('/api/modules/active')
     ])
       .then(async ([resR, resM]) => {
         const results = resR.data.module_results;
         const modules = resM.data.modules;
 
         if (!results.length || results.length < modules.length) {
-          setIncompleteDialogOpen(true); // 👈 show dialog if no results
+          setIncompleteDialogOpen(true); // show dialog if no results
         }
 
         const chart = await Promise.all(results.map(async (r) => {

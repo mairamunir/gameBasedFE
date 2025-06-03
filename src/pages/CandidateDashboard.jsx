@@ -1,4 +1,3 @@
-//assessment bar not working as of yet
 import React, { useEffect, useState } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
@@ -24,7 +23,7 @@ const CandidateDashboard = () => {
           totalModulesRes,
           completedRes
         ] = await Promise.all([
-          api.get('/api/modules/total-modules'),
+          api.get('/api/modules/count/active'),
           api.get(`/api/moduleResult/completed-count?user_id=${user?.id}`),
         ]);
         setTotalModules(totalModulesRes.data.totalModules); 
@@ -51,7 +50,7 @@ const CandidateDashboard = () => {
 
   const handleViewResults = () => {
     if (completedCount < totalModules) {
-      alert("You still have modules left, please complete them first.");
+      //alert("You still have modules left, please complete them first.");
       navigate('/results');
     } else {
       navigate('/results');
