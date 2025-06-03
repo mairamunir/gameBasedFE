@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, AreaChart, Area, LineChart, Line } from 'recharts';
 import api from '@/lib/api';
-
+import CandidatesTable from '../components/recruiter/CandidatesTable';
 
 const Analytics = () => {
   const [analyticsData, setAnalyticsData] = useState({
@@ -56,10 +56,10 @@ const Analytics = () => {
 
         {/* Tabs */}
         <Tabs defaultValue="overview" className="mb-8">
-          <TabsList className="grid w-full md:w-auto grid-cols-3 mb-8">
+          <TabsList className="grid w-full md:w-auto grid-cols-2 mb-8">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="candidates">Candidates</TabsTrigger>
-            <TabsTrigger value="assessments">Assessments</TabsTrigger>
+            {/* <TabsTrigger value="assessments">Assessments</TabsTrigger> */}
           </TabsList>
 
           <TabsContent value="overview">
@@ -116,40 +116,21 @@ const Analytics = () => {
               </Card>
             </div>
           </TabsContent>
+{/* Candidate tab */}
+        <TabsContent value="candidates">
+  <div className="grid gap-8 md:grid-cols-1">
+    <Card>
+      <CardHeader>
+        <CardTitle>Candidate Stats</CardTitle>
+        <CardDescription>List of all candidates with assessment scores</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <CandidatesTable />
+      </CardContent>
+    </Card>
+  </div>
+</TabsContent>
 
-          <TabsContent value="candidates">
-            <div className="grid gap-8 md:grid-cols-2">
-              {/* Candidate Growth */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Candidate Growth</CardTitle>
-                  <CardDescription>Monthly candidate registration trends</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart
-                        data={assessmentTrends}
-                        margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Area
-                          type="monotone"
-                          dataKey="assessments"
-                          stroke="#8B5CF6"
-                          fill="#8B5CF6"
-                          fillOpacity={0.3}
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
 
           <TabsContent value="assessments">
             <div className="grid gap-8 md:grid-cols-2">
@@ -183,33 +164,7 @@ const Analytics = () => {
               </Card>
 
               {/* Assessment Volume */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Assessment Volume</CardTitle>
-                  <CardDescription>Monthly assessment volume trends</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        data={assessmentTrends}
-                        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                      >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="month" />
-                        <YAxis />
-                        <Tooltip />
-                        <Line
-                          type="monotone"
-                          dataKey="assessments"
-                          stroke="#F97316"
-                          activeDot={{ r: 8 }}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                </CardContent>
-              </Card>
+              
             </div>
           </TabsContent>
         </Tabs>
