@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend, AreaChart, Area, LineChart, Line } from 'recharts';
 import api from '@/lib/api';
 
+
 const Analytics = () => {
   const [analyticsData, setAnalyticsData] = useState({
     monthlyCompletion: [],

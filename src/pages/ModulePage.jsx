@@ -11,7 +11,7 @@ import { useAuth } from '@/contexts/AuthContext'; // <-- to get user id
 const moduleIcons = {
   "Leadership": ShieldCheck,
   "Emotional Intelligence": HeartHandshake,
-  "Critical Thinking": Brain,
+  "Decision Making": Brain,
   "Teamwork": Users,
   "Creativity": Lightbulb,
 };
