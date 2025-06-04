@@ -24,7 +24,7 @@ const CandidateDashboard = () => {
           completedRes
         ] = await Promise.all([
           api.get('/api/modules/count/active'),
-          api.get(`/api/moduleResult/completed-count?user_id=${user?.id}`),
+          api.get(`/api/moduleResult/completed-count-bar?user_id=${user?.id}`),
         ]);
         setTotalModules(totalModulesRes.data.totalModules); 
         setCompletedCount(completedRes.data.count);

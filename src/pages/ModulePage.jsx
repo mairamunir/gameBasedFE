@@ -33,7 +33,6 @@ const ModulePage = () => {
   const [error, setError] = useState(null);
 
   const { user } = useAuth(); // <-- get logged-in user
-  console.log(user.id);
 
   // 1) Fetch all modules from backend
   const fetchModules = async () => {

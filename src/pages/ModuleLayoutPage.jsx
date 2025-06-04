@@ -22,28 +22,28 @@ export default function ModuleLayoutPage() {
   const { user } = useAuth();
   const { assessmentId } = useParams();   // module_id
   const navigate = useNavigate();
-  const [moduleName, setModuleName] = useState('');
+  const [moduleName, setModuleName] = useState("");
   const [exitDialogOpen, setExitDialogOpen] = useState(false);
-
 
   useEffect(() => {
     const fetchModuleName = async () => {
-    try {
-      const response = await api.get(`/api/modules/${assessmentId}`);
-      setModuleName(response.data.name);
-    } catch (error) {
-      console.error('Error fetching module details:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to fetch module details.',
-        variant: 'destructive',
-      });
-    }
-  };
+      try {
+        const response = await api.get(`/api/modules/${assessmentId}`);
+        // your GET /api/modules/:id returns { module: { name, … } } or maybe { name } directly
+        setModuleName(response.data.module?.name || response.data.name);
+      } catch (error) {
+        console.error("Error fetching module details:", error);
+        toast({
+          title: "Error",
+          description: "Failed to fetch module details.",
+          variant: "destructive",
+        });
+      }
+    };
 
-  if (assessmentId) {
-    fetchModuleName();
-  }
+    if (assessmentId) {
+      fetchModuleName();
+    }
 
     if (!assessmentId || !user?.id) {
       toast({
@@ -56,13 +56,16 @@ export default function ModuleLayoutPage() {
   }, [assessmentId, user, navigate]);
 
   const handleUnityComplete = async () => {
-    console.log("unity module completed.")
+    console.log("unity module completed.");
     toast({ title: "Saving...", description: "Checking your progress." });
 
     try {
-      // fetch total modules
+      // 1) Get total number of active modules:
+      //    GET /api/modules/total-modules-candidates  → { totalModules }
+      // 2) Get how many active modules this user has already completed:
+      //    GET /api/moduleResult/completed-count?user_id=XYZ → { completedModules }
       const [{ data: tot }, { data: comp }] = await Promise.all([
-        api.get("/api/modules/total-modules"),
+        api.get("/api/modules/total-modules-candidates"),
         api.get("/api/moduleResult/completed-count", {
           params: { user_id: user.id },
         }),
@@ -70,8 +73,8 @@ export default function ModuleLayoutPage() {
 
       const total = tot.totalModules;
       const completed = comp.completedModules;
+      console.log("total active modules:", total, "completed by user:", completed);
 
-      // if after finishing this one it's now equal to total, go results:
       if (completed >= total) {
         navigate("/results");
       } else {
@@ -90,13 +93,14 @@ export default function ModuleLayoutPage() {
   return (
     <PageLayout>
       <div className="container max-w-4xl py-10">
-      <div className="mb-8">
+        <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-white">{moduleName || "Loading..."}</h1>
+              <h1 className="text-2xl font-bold tracking-tight text-white">
+                {moduleName || "Loading..."}
+              </h1>
               <p className="text-white">Please complete the assessment below.</p>
             </div>
-            
             <div className="flex items-center gap-4 bg-candidate-primary">
               <Button
                 variant="outline"
@@ -137,7 +141,151 @@ export default function ModuleLayoutPage() {
       </div>
     </PageLayout>
   );
-};
+}
+
+
+
+
+// // src/pages/ModuleLayoutPage.jsx
+// import React, { useState, useEffect } from "react";
+// import { useParams, useNavigate } from "react-router-dom";
+// import { useAuth } from "@/contexts/AuthContext";
+// import api from "@/lib/api";            // axios with baseURL = VITE_API_URL
+// import PageLayout from "@/components/layout/PageLayout";
+// import UnityAssessment from "@/components/unity/UnityAssessment";
+// import { toast } from "@/hooks/use-toast";
+// import { Button } from "@/components/ui/button";
+// import {
+//   AlertDialog,
+//   AlertDialogAction,
+//   AlertDialogCancel,
+//   AlertDialogContent,
+//   AlertDialogDescription,
+//   AlertDialogFooter,
+//   AlertDialogHeader,
+//   AlertDialogTitle,
+// } from "@/components/ui/alert-dialog";
+
+// export default function ModuleLayoutPage() {
+//   const { user } = useAuth();
+//   const { assessmentId } = useParams();   // module_id
+//   const navigate = useNavigate();
+//   const [moduleName, setModuleName] = useState('');
+//   const [exitDialogOpen, setExitDialogOpen] = useState(false);
+
+
+//   useEffect(() => {
+//     const fetchModuleName = async () => {
+//     try {
+//       const response = await api.get(`/api/modules/${assessmentId}`);
+//       setModuleName(response.data.name);
+//     } catch (error) {
+//       console.error('Error fetching module details:', error);
+//       toast({
+//         title: 'Error',
+//         description: 'Failed to fetch module details.',
+//         variant: 'destructive',
+//       });
+//     }
+//   };
+
+//   if (assessmentId) {
+//     fetchModuleName();
+//   }
+
+//     if (!assessmentId || !user?.id) {
+//       toast({
+//         title: "Missing data",
+//         description: "Cannot find module or user.",
+//         variant: "destructive",
+//       });
+//       navigate("/assessments");
+//     }
+//   }, [assessmentId, user, navigate]);
+
+//   const handleUnityComplete = async () => {
+//     console.log("unity module completed.")
+//     toast({ title: "Saving...", description: "Checking your progress." });
+
+//     try {
+//       // fetch total modules
+//       const [{ data: tot }, { data: comp }] = await Promise.all([
+//         api.get("/api/modules/total-modules"),
+//         api.get("/api/moduleResult/completed-count", {
+//           params: { user_id: user.id },
+//         }),
+//       ]);
+
+//       const total = tot.totalModules;
+//       const completed = comp.completedModules;
+
+//       // if after finishing this one it's now equal to total, go results:
+//       if (completed >= total) {
+//         navigate("/results");
+//       } else {
+//         navigate("/assessments");
+//       }
+//     } catch (err) {
+//       console.error("Error checking progress:", err);
+//       toast({
+//         title: "Error",
+//         description: "Could not determine completion status.",
+//         variant: "destructive",
+//       });
+//     }
+//   };
+
+//   return (
+//     <PageLayout>
+//       <div className="container max-w-4xl py-10">
+//       <div className="mb-8">
+//           <div className="flex items-center justify-between mb-4">
+//             <div>
+//               <h1 className="text-2xl font-bold tracking-tight text-white">{moduleName || "Loading..."}</h1>
+//               <p className="text-white">Please complete the assessment below.</p>
+//             </div>
+            
+//             <div className="flex items-center gap-4 bg-candidate-primary">
+//               <Button
+//                 variant="outline"
+//                 size="sm"
+//                 className="w-20"
+//                 onClick={() => setExitDialogOpen(true)}
+//               >
+//                 Exit
+//               </Button>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Unity WebGL embed */}
+//         <UnityAssessment
+//           userId={user.id}
+//           assessmentId={assessmentId}
+//           onComplete={handleUnityComplete}
+//         />
+
+//         {/* Exit Dialog */}
+//         <AlertDialog open={exitDialogOpen} onOpenChange={setExitDialogOpen}>
+//           <AlertDialogContent>
+//             <AlertDialogHeader>
+//               <AlertDialogTitle>Exit Assessment?</AlertDialogTitle>
+//               <AlertDialogDescription>
+//                 Your progress will not be saved. Continue?
+//               </AlertDialogDescription>
+//             </AlertDialogHeader>
+//             <AlertDialogFooter>
+//               <AlertDialogCancel>Cancel</AlertDialogCancel>
+//               <AlertDialogAction onClick={() => navigate("/assessments")}>
+//                 Exit
+//               </AlertDialogAction>
+//             </AlertDialogFooter>
+//           </AlertDialogContent>
+//         </AlertDialog>
+//       </div>
+//     </PageLayout>
+//   );
+// };
 
 
 

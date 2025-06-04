@@ -199,7 +199,7 @@ const Profile = () => {
   const renderCandidateProfile = () => (
     <>
       {/* Education Section */}
-      <Card className="mb-6">
+      {/* <Card className="mb-6">
         <CardHeader>
           <CardTitle className="flex items-center">
             <GraduationCap className="mr-2 h-5 w-5" />
@@ -223,7 +223,7 @@ const Profile = () => {
             </Button>
           </CardFooter>
         )}
-      </Card>
+      </Card> */}
       {/* (Optional) Assessment Summary */}
     </>
   );
@@ -238,7 +238,7 @@ const Profile = () => {
     return (
       <>
         {/* Department Information */}
-        <Card className="mb-6">
+        {/* <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Building className="mr-2 h-5 w-5" />
@@ -285,20 +285,20 @@ const Profile = () => {
               View All Candidates
             </Button>
           </CardFooter>
-        </Card>
+        </Card> */}
 
         {/* Activity Summary */}
-        <Card className="mb-6">
-          <CardHeader>
+        {/*<Card className="mb-6">
+           <CardHeader>
             <CardTitle className="flex items-center">
               <BarChart className="mr-2 h-5 w-5" />
               Recruitment Activity
             </CardTitle>
             <CardDescription>Recent metrics & updates</CardDescription>
-          </CardHeader>
-          <CardContent>
+          </CardHeader>*/}
+          {/* <CardContent> 
             <div className="space-y-4">
-              <div className="grid grid-cols-3 gap-4">
+               <div className="grid grid-cols-3 gap-4">
                 <div className="rounded-lg border p-3">
                   <div className="text-sm text-gray-500">Assessments Sent</div>
                   <div className="text-xl font-semibold">28</div>
@@ -311,9 +311,9 @@ const Profile = () => {
                   <div className="text-sm text-gray-500">Avg. Score</div>
                   <div className="text-xl font-semibold">84%</div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="mt-4">
+              {/* <div className="mt-4">
                 <h4 className="font-medium mb-2">Recent Activity</h4>
                 <div className="space-y-2">
                   <div className="text-sm rounded-lg bg-gray-50 p-3">
@@ -329,19 +329,19 @@ const Profile = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> 
             </div>
-          </CardContent>
-          <CardFooter>
-            <Button
+          </CardContent>*/}
+          {/* <CardFooter>
+            {/* <Button
               variant="outline"
               className="w-full"
               onClick={() => navigate("/analytics")}
             >
               View Analytics
-            </Button>
-          </CardFooter>
-        </Card>
+            </Button> 
+          </CardFooter> 
+        </Card>*/}
       </>
     );
   };
@@ -422,12 +422,12 @@ const Profile = () => {
                   <span className="text-gray-500">3 days ago</span>
                 </div>
               </div>
-              <div className="text-sm rounded-lg bg-gray-50 p-3">
+              {/* <div className="text-sm rounded-lg bg-gray-50 p-3">
                 <div className="flex justify-between">
                   <span>System backup completed</span>
                   <span className="text-gray-500">1 week ago</span>
                 </div>
-              </div>
+              </div> */}
             </div>
           </CardContent>
           <CardFooter>
@@ -497,7 +497,7 @@ const Profile = () => {
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
-            {/* <div className="grid gap-2">
+            <div className="grid gap-2">
               <Label htmlFor="education">Education</Label>
               <Textarea
                 id="education"
@@ -505,7 +505,7 @@ const Profile = () => {
                 value={education}
                 onChange={(e) => setEducation(e.target.value)}
               />
-            </div> */}
+            </div> 
           </>
         ) : (
           <>
@@ -581,7 +581,7 @@ const Profile = () => {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-500">Education</p>
-                <p className="text-base">
+                <p className="text-lg font-semibold">
                   {profile.education || "N/A"}
                 </p>
               </div>
@@ -624,8 +624,8 @@ const Profile = () => {
     <PageLayout>
       <div className="container py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">My Profile</h1>
-          <p className="text-gray-500">View and manage your information</p>
+          <h1 className="text-3xl font-bold tracking-tight text-white">My Profile</h1>
+          <p className="text-white">View and manage your information</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
@@ -668,11 +668,11 @@ const Profile = () => {
                   <>
                     <div className="flex items-center">
                       <Users className="h-4 w-4 mr-2 text-gray-500" />
-                      <span className="text-sm">20 Candidates Managed</span>
+                      <span className="text-sm">7 Candidates Managed</span>
                     </div>
                     <div className="flex items-center">
                       <CheckCircle className="h-4 w-4 mr-2 text-gray-500" />
-                      <span className="text-sm">5 Hires Completed</span>
+                      <span className="text-sm">3 Hires Completed</span>
                     </div>
                   </>
                 )}

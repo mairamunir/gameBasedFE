@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -28,6 +29,7 @@ const SignupForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState('candidate');
   const [passwordError, setPasswordError] = useState('');
+    const [agreementChecked, setAgreementChecked] = useState(false);
   const { signup, isLoading } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -35,6 +37,11 @@ const SignupForm = () => {
 
     if (password !== confirmPassword) {
       setPasswordError('Passwords do not match');
+      return;
+    }
+
+    if (!agreementChecked) {
+      // Should never happen since button is disabled, but just in case:
       return;
     }
 
@@ -117,12 +124,39 @@ const SignupForm = () => {
               <p className="text-sm text-red-500">{passwordError}</p>
             )}
           </div>
+
+          {/* Agreement Checkbox */}
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="agreement"
+              checked={agreementChecked}
+              onCheckedChange={(checked) => setAgreementChecked(checked)}
+              required
+            />
+            <Label htmlFor="agreement" className="text-sm">
+              I agree to the{" "}
+              <Link to="/terms" className="text-blue-600 hover:underline">
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link to="/privacy" className="text-blue-600 hover:underline">
+                Privacy Policy
+              </Link>
+              .
+            </Label>
+          </div>
+
         </CardContent>
         <CardFooter className="flex flex-col">
           <Button
             type="submit"
             className="w-full font-semibold"
-            disabled={isLoading}
+            disabled={isLoading||
+              !agreementChecked ||
+              password === "" ||
+              confirmPassword === "" ||
+              name === "" ||
+              email === ""}
           >
             {isLoading ? (
               <>
