@@ -55,8 +55,8 @@ const ModuleEditor = () => {
     name: "",
     type: "personality",
     description: "",
-    questions: 0,
-    timeLimit: 0,
+    max_score: 0,
+    average_time: 0,
     status: "draft",
     webgl_url: "",
   });
@@ -110,8 +110,8 @@ const ModuleEditor = () => {
         name: newModule.name,
         type: newModule.type,
         description: newModule.description,
-        questions: newModule.questions,
-        timeLimit: newModule.timeLimit,
+        max_score: newModule.max_score,
+        average_time: newModule.average_time,
         status: newModule.status,
         webgl_url: newModule.webgl_url,
       };
@@ -123,8 +123,8 @@ const ModuleEditor = () => {
         name: "",
         type: "personality",
         description: "",
-        questions: 0,
-        timeLimit: 0,
+        max_score: 0,
+        average_time: 0,
         status: "draft",
         webgl_url: "",
       });
@@ -150,8 +150,8 @@ const ModuleEditor = () => {
         name: currentModule.name,
         type: currentModule.type,
         description: currentModule.description,
-        questions: currentModule.questions,
-        timeLimit: currentModule.timeLimit,
+        max_score: currentModule.max_score,
+        average_time: currentModule.average_time,
         status: currentModule.status,
         webgl_url: currentModule.webgl_url,
       };
@@ -272,7 +272,7 @@ const ModuleEditor = () => {
                 <TableRow>
                   <TableHead className="text-center">Module Name</TableHead>
                   <TableHead className="text-center">Type</TableHead>
-                  {/* <TableHead className="text-center">Questions</TableHead> */}
+                   <TableHead className="text-center">Max score</TableHead> 
                   <TableHead className="text-center">Avg Time</TableHead>
                   <TableHead className="text-center">Status</TableHead>
                   <TableHead className="text-center">Last Updated</TableHead>
@@ -304,7 +304,7 @@ const ModuleEditor = () => {
                       <TableCell className="capitalize text-center">
                         {module.type}
                       </TableCell>
-                      {/* <TableCell className="text-center">{module.questions}</TableCell> */}
+                      <TableCell className="text-center">{module.max_score}</TableCell> 
                       <TableCell className="text-center">{module.average_time} min</TableCell>
                       <TableCell className="text-center">{getStatusBadge(module.status)}</TableCell>
                       <TableCell className="text-center"> 
@@ -568,7 +568,7 @@ const ModuleEditor = () => {
                       onChange={(e) =>
                         setCurrentModule({
                           ...currentModule,
-                          timeLimit: parseInt(e.target.value) || 0,
+                          average_time: parseInt(e.target.value) || 0,
                         })
                       }
                     />
